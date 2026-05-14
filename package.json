@@ -6,17 +6,22 @@
     "dev": "next dev -p 3060",
     "build": "next build",
     "start": "next start -H 127.0.0.1 -p 3060",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ios:sync": "next build && cap sync ios",
+    "ios:open": "next build && cap sync ios && cap open ios"
   },
   "dependencies": {
-    "better-sqlite3": "^12.10.0",
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4",
+    "@capacitor/haptics": "^8.0.2",
+    "@capacitor/ios": "^8.3.4",
+    "@supabase/supabase-js": "^2.105.4",
     "framer-motion": "^11.18.0",
     "next": "^15.5.18",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",

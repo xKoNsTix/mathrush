@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" fill="#FF4A1C"/>
+  <!-- hard shadow plate -->
+  <rect x="232" y="248" width="640" height="640" rx="64" fill="#111111"/>
+  <!-- foreground cream plate -->
+  <rect x="200" y="216" width="640" height="640" rx="64" fill="#F4F1EA"/>
+  <!-- bold plus symbol in ink -->
+  <g fill="#111111">
+    <rect x="480" y="320" width="80" height="432" rx="20"/>
+    <rect x="304" y="496" width="432" height="80" rx="20"/>
+  </g>
+  <!-- accent dot, small, top-right of the plate, for speed/rush vibe -->
+  <circle cx="780" cy="276" r="28" fill="#FF4A1C"/>
+</svg>

@@ -1,9 +1,15 @@
-// Web Vibration API. Android = nativ, iOS Safari = erst ab 18.4
-// partiell und nur wenn in den Bedienungshilfen Vibration aktiviert ist.
-// Geräte ohne Support no-oppen still. Längere Pulse (≥25 ms) werden
-// von iOS eher honoriert als 10-ms-Mikropulse.
+// Native iOS haptics via Capacitor (UIImpactFeedbackGenerator /
+// UINotificationFeedbackGenerator). On web, falls back to navigator.vibrate
+// (Android = native, iOS Safari = mostly no-op).
 
-function rawVibrate(pattern: number | number[]): boolean {
+import { Capacitor } from "@capacitor/core";
+import { Haptics, ImpactStyle, NotificationType } from "@capacitor/haptics";
+
+function isNative(): boolean {
+  return typeof window !== "undefined" && Capacitor.isNativePlatform();
+}
+
+function webVibrate(pattern: number | number[]): boolean {
   if (typeof navigator === "undefined") return false;
   if (typeof navigator.vibrate !== "function") return false;
   try {
@@ -13,28 +19,40 @@ function rawVibrate(pattern: number | number[]): boolean {
   }
 }
 
-/** Kurzer Tipp beim Drücken einer Antwort — etwas länger (28 ms),
- *  damit iOS-Safari den Puls nicht als zu kurz aussortiert. */
 export function tapHaptic(): void {
-  rawVibrate(28);
+  if (isNative()) {
+    Haptics.impact({ style: ImpactStyle.Light }).catch(() => {});
+    return;
+  }
+  webVibrate(28);
 }
 
-/** Triple-Pulse für Combo-Milestones — markanter spürbar. */
 export function comboHaptic(): void {
-  rawVibrate([30, 35, 45]);
+  if (isNative()) {
+    Haptics.notification({ type: NotificationType.Success }).catch(() => {});
+    return;
+  }
+  webVibrate([30, 35, 45]);
 }
 
-/** Diagnose: ist die API überhaupt im Browser verfügbar?
- *  (Sagt nichts darüber aus ob das Gerät dann auch wirklich vibriert —
- *  nur ob unser Code überhaupt etwas anstoßen kann.) */
+export function wrongHaptic(): void {
+  if (isNative()) {
+    Haptics.notification({ type: NotificationType.Error }).catch(() => {});
+    return;
+  }
+  webVibrate([40, 50, 40]);
+}
+
 export function isHapticsApiAvailable(): boolean {
+  if (isNative()) return true;
   if (typeof navigator === "undefined") return false;
   return typeof navigator.vibrate === "function";
 }
 
-/** Test-Vibration für die UI — etwas länger (60 ms), damit man's klar
- *  spürt. Gibt zurück, ob navigator.vibrate erfolgreich war (heißt
- *  nicht zwingend dass Hardware vibriert hat). */
 export function testHaptic(): boolean {
-  return rawVibrate(60);
+  if (isNative()) {
+    Haptics.impact({ style: ImpactStyle.Medium }).catch(() => {});
+    return true;
+  }
+  return webVibrate(60);
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2732" height="2732" viewBox="0 0 2732 2732">
+  <rect width="2732" height="2732" fill="#F4F1EA"/>
+  <!-- center the icon-equivalent in ~900px region -->
+  <g transform="translate(1366,1366)">
+    <!-- hard shadow plate -->
+    <rect x="-400" y="-368" width="900" height="900" rx="96" fill="#111111"/>
+    <!-- accent plate -->
+    <rect x="-450" y="-418" width="900" height="900" rx="96" fill="#FF4A1C"/>
+    <!-- bold plus -->
+    <g fill="#F4F1EA">
+      <rect x="-58" y="-296" width="116" height="608" rx="28"/>
+      <rect x="-304" y="-50" width="608" height="116" rx="28"/>
+    </g>
+  </g>
+  <!-- wordmark below -->
+  <g transform="translate(1366,2050)" text-anchor="middle"
+     font-family="Helvetica Neue, Arial, sans-serif"
+     font-weight="700" font-size="120" fill="#111111"
+     letter-spacing="6">
+    <text>MATH RUSH</text>
+  </g>
+</svg>
