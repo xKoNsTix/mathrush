@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: #F4F1EA;
+  color: #111111;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+body {
+  font-feature-settings: "ss01", "cv11", "tnum";
+}
+
+::selection {
+  background: #FF4A1C;
+  color: #F4F1EA;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+@keyframes pulseGood {
+  0% { background-color: rgba(27, 196, 125, 0); }
+  20% { background-color: rgba(27, 196, 125, 0.18); }
+  100% { background-color: rgba(27, 196, 125, 0); }
+}
+@keyframes pulseBad {
+  0% { background-color: rgba(229, 56, 79, 0); }
+  20% { background-color: rgba(229, 56, 79, 0.22); }
+  100% { background-color: rgba(229, 56, 79, 0); }
+}
+.flash-good { animation: pulseGood 360ms ease-out; }
+.flash-bad { animation: pulseBad 360ms ease-out; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.shake { animation: shake 280ms ease-in-out; }
