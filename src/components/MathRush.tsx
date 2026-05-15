@@ -22,6 +22,7 @@ import {
 } from "@/lib/user";
 import { NicknameForm } from "./NicknameForm";
 import { Leaderboard } from "./Leaderboard";
+import Multiplayer from "./Multiplayer";
 
 // Linke Hand auf der Home-Row: A=Pinky, S=Ring, D=Middle, F=Index. Auf
 // Mobile gibt's keine Tastatur; die Reihenfolge der Buttons (0..3) bleibt
@@ -40,6 +41,7 @@ interface Flash {
 
 export default function MathRush() {
   const [phase, setPhase] = useState<Phase>("idle");
+  const [multiplayer, setMultiplayer] = useState(false);
   const [problem, setProblem] = useState<Problem | null>(null);
   const [choices, setChoices] = useState<number[]>([]);
   const [score, setScore] = useState(0);
@@ -266,7 +268,11 @@ export default function MathRush() {
       }}
       key={flash?.id ?? "stage"}
     >
-      {phase === "playing" && (
+      {multiplayer && (
+        <Multiplayer user={user} onExit={() => setMultiplayer(false)} />
+      )}
+
+      {!multiplayer && phase === "playing" && (
         <PlayingScreen
           problem={problem!}
           choices={choices}
@@ -284,17 +290,18 @@ export default function MathRush() {
         />
       )}
 
-      {phase === "idle" && (
+      {!multiplayer && phase === "idle" && (
         <IdleScreen
           highScore={highScore}
           onStart={startGame}
+          onParty={() => setMultiplayer(true)}
           user={user}
           onUserChange={setUser}
           boardKey={boardKey}
         />
       )}
 
-      {phase === "over" && (
+      {!multiplayer && phase === "over" && (
         <OverScreen
           score={score}
           solved={solved}
@@ -315,12 +322,14 @@ export default function MathRush() {
 function IdleScreen({
   highScore,
   onStart,
+  onParty,
   user,
   onUserChange,
   boardKey,
 }: {
   highScore: HighScore | null;
   onStart: () => void;
+  onParty: () => void;
   user: User | null;
   onUserChange: (u: User | null) => void;
   boardKey: number;
@@ -414,6 +423,15 @@ function IdleScreen({
         >
           Start
         </button>
+        <button
+          onClick={onParty}
+          className="touch-manipulation rounded-2xl border-2 border-ink/80 bg-paper py-4 text-base font-bold text-ink shadow-hard transition-transform active:translate-x-[2px] active:translate-y-[2px] active:shadow-hardsm"
+        >
+          <span className="flex items-center justify-center gap-2">
+            <span className="inline-block h-2 w-2 rounded-full bg-accent" />
+            Join or create session
+          </span>
+        </button>
         <Link
           href="/leaderboard"
           className="touch-manipulation rounded-2xl border-2 border-ink/15 bg-paper py-3 text-center text-sm font-bold uppercase tracking-[0.18em] text-ink/70 active:border-ink/40 active:text-ink"
@@ -440,7 +458,7 @@ function IdleScreen({
 
 // --------- Playing ---------
 
-function PlayingScreen({
+export function PlayingScreen({
   problem,
   choices,
   onPick,
