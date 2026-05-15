@@ -15,6 +15,19 @@ body {
   overscroll-behavior: none;
 }
 
+/* Desktop: dim the page outside the centered "phone card" so the layout
+   reads as deliberate instead of "mobile site stretched". The card itself
+   keeps the paper color. */
+@media (min-width: 768px) {
+  html,
+  body {
+    background: #E5DFCF;
+    background-image:
+      radial-gradient(rgba(17, 17, 17, 0.05) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+}
+
 body {
   font-feature-settings: "ss01", "cv11", "tnum";
 }
@@ -54,3 +67,24 @@ input[type="number"] {
   80% { transform: translateX(4px); }
 }
 .shake { animation: shake 280ms ease-in-out; }
+
+/* Mouse hover affordances. The mobile layout already conveys interactivity
+   via active-state press; on desktop we lift raised buttons slightly so
+   they feel responsive. Touch devices skip this via hover: hover query. */
+@media (hover: hover) and (pointer: fine) {
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  button.shadow-hard:not(:disabled):hover,
+  a.shadow-hard:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 7px 7px 0 0 #111111;
+  }
+  button.shadow-hard:not(:disabled),
+  a.shadow-hard {
+    transition: transform 120ms ease, box-shadow 120ms ease;
+  }
+}

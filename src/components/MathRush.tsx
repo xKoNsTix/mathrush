@@ -256,7 +256,7 @@ export default function MathRush() {
   return (
     <main
       className={
-        "relative flex min-h-dvh w-full flex-col " +
+        "relative mx-auto flex min-h-dvh w-full flex-col bg-paper md:my-8 md:min-h-[min(900px,calc(100dvh-4rem))] md:max-w-md md:rounded-3xl md:border-2 md:border-ink/15 md:shadow-hard " +
         (flash?.kind === "good" ? "flash-good" : "") +
         (flash?.kind === "bad" ? " flash-bad" : "")
       }

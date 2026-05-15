@@ -29,7 +29,7 @@ export default function LeaderboardPage() {
 
   return (
     <main
-      className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col"
+      className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col bg-paper md:my-8 md:min-h-[min(900px,calc(100dvh-4rem))] md:rounded-3xl md:border-2 md:border-ink/15 md:shadow-hard"
       style={{
         paddingTop: "max(env(safe-area-inset-top), 1rem)",
         paddingBottom: "max(env(safe-area-inset-bottom), 1rem)",
